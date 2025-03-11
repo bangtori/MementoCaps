@@ -1,7 +1,7 @@
 ## MementoCaps
 ## 0. 인프런 워밍업 스터디
 1. 미션1 (깃허브 리포지토리에 프로젝트 올리기) - [미션1 commit](https://github.com/bangtori/MementoCaps/commit/588df081eaba906b24d0d68896a6d7c7e4ecc135)
-2. 미션2 (테이블 설계하기)
+2. 미션2 (테이블 설계하기) - [미션2 commit](https://github.com/bangtori/MementoCaps/commit/d6212fff10a175fe9721ed6332a4f8465ac68054)
 3. 미션3 (REST API 설계하기)
 4. 미션4 (조회 REST API 만들기)
 5. 미션5 (삽입, 삭제, 수정 REST API 만들기)
@@ -102,3 +102,24 @@ InviteCode (초대 코드)
 ```
 </div>
 </details>
+
+## 3. API 설계
+[자세한 명세서 확인(포스트맨)](https://documenter.getpostman.com/view/20884237/2sAYk7TQQs)
+### 3.1 사용자 API
+| 메서드    | 엔드포인트          | 설명   | 
+| ------ | -------------- | ---- | 
+| `POST` | `/auth/signup` | 회원가입 |
+| `POST` | `/auth/login`  | 로그인  |
+### 3.2 타임캡슐 API
+| 메서드    | 엔드포인트                     | 설명   | 
+|--------|---------------------------| ---- | 
+| `POST` | `/capsules`               | 타임캡슐 생성 |
+| `GET` | `/capsules/list/{userId}` | 내가 속한 타임캡슐 리스트 생성|
+| `GET` | `/capsules/{capsuleId}` | 특정 타임캡슐 1개 조회 |
+| `DELETE` | `/capsules/{capsuleId}` | 특정 타임캡슐 삭제 |
+
+### 3.3 초대 및 참여 API 
+| 메서드    | 엔드포인트                          | 설명   | 
+|--------|--------------------------------| ---- | 
+| `POST` | `/capsules/join`               | 초대코드 입력 후 참여 |
+| `POST` | `/capsules/{capsuleId}/invite` | 초대 코드 생성|
