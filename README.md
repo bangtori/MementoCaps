@@ -2,7 +2,7 @@
 ## 0. 인프런 워밍업 스터디
 1. 미션1 (깃허브 리포지토리에 프로젝트 올리기) - [미션1 commit](https://github.com/bangtori/MementoCaps/commit/588df081eaba906b24d0d68896a6d7c7e4ecc135)
 2. 미션2 (테이블 설계하기) - [미션2 commit](https://github.com/bangtori/MementoCaps/commit/d6212fff10a175fe9721ed6332a4f8465ac68054)
-3. 미션3 (REST API 설계하기)
+3. 미션3 (REST API 설계하기) - [미션3 commit](https://github.com/bangtori/MementoCaps/commit/18c9a69fe82bbed2bc01028064340102b738a40a)
 4. 미션4 (조회 REST API 만들기)
 5. 미션5 (삽입, 삭제, 수정 REST API 만들기)
 6. 미션6 -> 포트폴리오 프로젝트 (가상 프로필을 나의 프로필로 바꾸기)
