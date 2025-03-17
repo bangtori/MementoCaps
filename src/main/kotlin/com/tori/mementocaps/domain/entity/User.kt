@@ -3,6 +3,7 @@ package com.tori.mementocaps.domain.entity
 import jakarta.persistence.*
 
 @Entity
+@Table(name = "users")
 class User(
     nickName: String,
     email: String,
