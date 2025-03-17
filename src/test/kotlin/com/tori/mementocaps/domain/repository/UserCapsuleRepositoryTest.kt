@@ -24,14 +24,7 @@ class UserCapsuleRepositoryTest(
     val DATA_SIZE = 9
     private lateinit var testUsers: List<User>
     private lateinit var testCapsules: List<Capsule>
-    // 캡슐 생성
-    private fun createCapsule(n: Int): Capsule {
-        return Capsule(
-            title = "${n}",
-            content = "Content {n}",
-            openDate = LocalDate.of(2025, 12, 31)
-        )
-    }
+
     @BeforeAll
     @DisplayName("📌 테스트 데이터 초기화")
     fun beforeAll() {
@@ -45,16 +38,10 @@ class UserCapsuleRepositoryTest(
         userRepository.saveAll(testUsers)
         // 캡슐 생성
         testCapsules = capsuleRepository.saveAll(
-            List(DATA_SIZE) { i -> Capsule(title = "Capsule ${i + 1}", content = "Content ${i + 1}", openDate = LocalDate.of(2025, 12, 31)) }
+            List(DATA_SIZE) { i -> Capsule(title = "Capsule ${i + 1}", content = "Content ${i + 1}", openDate = LocalDate.of(2025, 12, 31), writer = testUsers[(i % 3).toInt()]) }
         )
         // UserCapsule 생성
-        val userCapsules = mutableListOf<UserCapsule>()
-        for (capsule in testCapsules) {
-            val ownerIndex = (capsule.id!! % 3).toInt() // 캡슐 ID % 3 값으로 OWNER 유저 인덱스 결정
-            val owner = testUsers[ownerIndex] // OWNER 유저 선택
-            userCapsules.add(UserCapsule(user = owner, capsule = capsule, role = Role.OWNER))
-        }
-        userCapsuleRepository.saveAll(userCapsules)
+
         println("===== 테스트 데이터 초기화 완료 =====")
     }
 

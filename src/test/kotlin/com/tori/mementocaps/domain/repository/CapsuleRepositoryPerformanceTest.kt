@@ -33,11 +33,8 @@ class CapsuleRepositoryPerformanceTest(
         val userCapsules = mutableListOf<UserCapsule>()
 
         for (i in 1..100) { // 테스트 데이터를 1000개 생성
-            val capsule = capsuleRepository.save(Capsule(title = "Capsule $i", content = "Content $i", openDate = LocalDate.now()))
+            val capsule = capsuleRepository.save(Capsule(title = "Capsule $i", content = "Content $i", openDate = LocalDate.now(), writer = testUser))
             capsules.add(capsule)
-
-            val userCapsule = UserCapsule(user = testUser, capsule = capsule, role = Role.OWNER)
-            userCapsules.add(userCapsule)
         }
         userCapsuleRepository.saveAll(userCapsules)
 
