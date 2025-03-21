@@ -1,7 +1,10 @@
 package com.tori.mementocaps.domain
 
+import com.tori.mementocaps.domain.constant.Role
 import com.tori.mementocaps.domain.entity.Capsule
+import com.tori.mementocaps.domain.entity.InviteCode
 import com.tori.mementocaps.domain.entity.User
+import com.tori.mementocaps.domain.entity.UserCapsule
 import com.tori.mementocaps.domain.repository.CapsuleRepository
 import com.tori.mementocaps.domain.repository.InviteCodeRepository
 import com.tori.mementocaps.domain.repository.UserCapsuleRepository
@@ -58,13 +61,11 @@ class DataInitializer(
                 title = "안녕하쇼",
                 content = "오래보자 친구들아~",
                 openDate = LocalDate.of(2025, 12, 31),
-                writer = users[0]
             ),
             Capsule(
                 title = "5년 뒤 나에게",
                 content = "아버지를 아버지라 부를 수 있기를 아디오스",
                 openDate = LocalDate.of(2030, 1, 1),
-                writer = users[0]
             ),
             Capsule(
                 title = "행운의 편지",
@@ -73,34 +74,52 @@ class DataInitializer(
                     어쩌구 저쩌구 7통 써서 전달하셈
                 """.trimIndent(),
                 openDate = LocalDate.of(2025, 12, 31),
-                writer = users[1]
             ),
             Capsule(
                 title = "약속",
                 content = "비밀이야 ㅋ",
                 openDate = LocalDate.of(2025, 12, 31),
-                writer = users[1]
             ),
             Capsule(
                 title = "웩 누구니?",
                 content = "사랑해~ 웩 누구니?",
                 openDate = LocalDate.of(2025, 12, 31),
-                writer = users[2]
             ),
             Capsule(
                 title = "3년 뒤에는 ",
                 content = "멋진 개발자가 되어있겠지? 그럴거라 믿는다.",
                 openDate = LocalDate.of(2028, 1, 1),
-                writer = users[2]
             ),
         )
+        capsuleRepository.saveAll(capsules)
+
+        val wirterMap = listOf(0, 0, 1, 1, 2, 2)
+        // 유저 캡슐 관계 저장
         for (i in 0..<capsules.count()) {
-            capsules[i].addUsers(users[3])
+            val userCapsules = mutableListOf<UserCapsule>(
+                UserCapsule(
+                    user = users[wirterMap[i]],
+                    capsule = capsules[i],
+                    role = Role.OWNER
+                ),
+                UserCapsule(
+                    user = users[3],
+                    capsule = capsules[i],
+                    role = Role.MEMBER
+                )
+            )
+            userCapsuleRepository.saveAll(userCapsules)
             if (i % 2 == 0) {
-                capsules[i].addCode()
+                val codes = mutableListOf<InviteCode>(
+                    InviteCode(
+                        capsule = capsules[i]
+                    ),
+                    InviteCode(
+                        capsule = capsules[i]
+                    )
+                )
+                inviteCodeRepository.saveAll(codes)
             }
         }
-        capsules.addAll(capsules)
-        capsuleRepository.saveAll(capsules)
     }
 }

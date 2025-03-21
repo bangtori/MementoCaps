@@ -10,6 +10,7 @@ interface CapsuleRepository: JpaRepository<Capsule, Long> {
     override fun findById(id: Long): Optional<Capsule>
     override fun deleteById(id: Long)
 
+    // 성능 테스트용
     @Query("SELECT c FROM Capsule c JOIN UserCapsule uc ON c.id = uc.capsule.id WHERE uc.user.id = :userId")
     fun findAllByUserId(@Param("userId") userId: Long): List<Capsule>
 }
