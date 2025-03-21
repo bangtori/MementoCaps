@@ -3,7 +3,7 @@ package com.tori.mementocaps.presentation.controller.apiController
 import com.tori.mementocaps.presentation.dto.CapsuleDTO
 import com.tori.mementocaps.presentation.dto.CapsuleListDTO
 import com.tori.mementocaps.presentation.dto.CreateCapsuleDTO
-import com.tori.mementocaps.presentation.exception.CapsuleNotFoundException
+import com.tori.mementocaps.presentation.exception.MementoCapsNotFoundException
 import com.tori.mementocaps.presentation.requestDTO.CapsuleRequestDTO
 import com.tori.mementocaps.presentation.service.CapsulePresentationService
 import org.springframework.web.bind.annotation.*
@@ -24,7 +24,7 @@ class CapsuleApiController(
         @RequestHeader("userId") userId: Long
     ): CapsuleDTO {
         return capsulePresentationService.getCapsuleDetail(capsuleId = capsuleId, userId = userId)
-            .orElseThrow { CapsuleNotFoundException() }
+            .orElseThrow { MementoCapsNotFoundException("capsuleId를 찾을 수 없습니다.") }
     }
 
     @PostMapping
