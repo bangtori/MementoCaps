@@ -6,7 +6,8 @@ import java.time.LocalDateTime
 
 @Entity
 class InviteCode(
-    capsule: Capsule
+    capsule: Capsule,
+    code: String?
 ): BaseEntity() {
     @Id // PK 명시
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +20,7 @@ class InviteCode(
 
     // 초대 코드 생성
     @Column(unique = true, nullable = false)
-    var code: String = InviteCodeGenerator.generateInviteCode()
+    var code: String = code ?: InviteCodeGenerator.generateInviteCode()
 
     @Column(nullable = false)
     var expiresAt: LocalDateTime = LocalDateTime.now().plusDays(7)

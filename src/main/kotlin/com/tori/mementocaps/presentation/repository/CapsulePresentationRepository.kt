@@ -6,6 +6,8 @@ import com.tori.mementocaps.domain.entity.UserCapsule
 import com.tori.mementocaps.domain.repository.CapsuleRepository
 import com.tori.mementocaps.domain.repository.UserCapsuleRepository
 import com.tori.mementocaps.domain.repository.UserRepository
+import com.tori.mementocaps.presentation.exception.MementoCapsBadRequestException
+import com.tori.mementocaps.presentation.exception.MementoCapsForbiddenException
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
@@ -30,7 +32,7 @@ class CapsulePresentationRepository(
         writerId: Long
     ): Capsule {
         val user = userRepository.findById(writerId)
-            .orElseThrow { IllegalArgumentException("작성자 없음") }
+            .orElseThrow { MementoCapsBadRequestException("작성자 정보를 찾을 수 없습니다.") }
 
         val capsule = capsuleRepository.save(
             Capsule(title, content, openDate)
@@ -41,5 +43,19 @@ class CapsulePresentationRepository(
         )
 
         return capsule
+    }
+
+    fun deleteCapsule(
+        capsuleId: Long,
+        requestUserId: Long
+    ): Unit {
+        val requestUserRole = userCapsuleRepository.findUserRoleInCapsule(capsuleId, requestUserId)
+            .orElseThrow { MementoCapsForbiddenException("참여 정보가 없습니다.") }
+        if (requestUserRole != Role.OWNER) {
+            throw MementoCapsForbiddenException("삭제 권한이 없습니다.")
+        }
+
+        userCapsuleRepository.deleteAllByCapsuleId(capsuleId)
+        capsuleRepository.deleteById(capsuleId)
     }
 }

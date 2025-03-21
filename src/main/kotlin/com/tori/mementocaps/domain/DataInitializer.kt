@@ -112,10 +112,12 @@ class DataInitializer(
             if (i % 2 == 0) {
                 val codes = mutableListOf<InviteCode>(
                     InviteCode(
-                        capsule = capsules[i]
+                        capsule = capsules[i],
+                        code = null
                     ),
                     InviteCode(
-                        capsule = capsules[i]
+                        capsule = capsules[i],
+                        code = null
                     )
                 )
                 inviteCodeRepository.saveAll(codes)

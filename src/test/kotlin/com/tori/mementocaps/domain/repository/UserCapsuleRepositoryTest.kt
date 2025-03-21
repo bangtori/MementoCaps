@@ -24,7 +24,6 @@ class UserCapsuleRepositoryTest(
     val DATA_SIZE = 9
     private lateinit var testUsers: List<User>
     private lateinit var testCapsules: List<Capsule>
-
     @BeforeAll
     @DisplayName("📌 테스트 데이터 초기화")
     fun beforeAll() {
@@ -37,12 +36,22 @@ class UserCapsuleRepositoryTest(
         )
         userRepository.saveAll(testUsers)
         // 캡슐 생성
+        // 캡슐 생성
         testCapsules = capsuleRepository.saveAll(
-            List(DATA_SIZE) { i -> Capsule(title = "Capsule ${i + 1}", content = "Content ${i + 1}", openDate = LocalDate.of(2025, 12, 31), writer = testUsers[(i % 3).toInt()]) }
+            List(DATA_SIZE) { i -> Capsule(title = "Capsule ${i + 1}", content = "Content ${i + 1}", openDate = LocalDate.of(2025, 12, 31)) }
         )
         // UserCapsule 생성
+        userCapsuleRepository.saveAll(
+            List(DATA_SIZE) { i ->
+                UserCapsule(
+                    capsule = testCapsules[i],
+                    user = testUsers[(i % 3).toInt()],
+                    role = Role.OWNER
+                )
+            }
+        )
 
-        println("===== 테스트 데이터 초기화 완료 =====")
+            println("===== 테스트 데이터 초기화 완료 =====")
     }
 
     @Test
